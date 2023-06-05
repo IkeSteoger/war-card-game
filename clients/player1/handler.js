@@ -48,7 +48,7 @@ const playedHand = (payload) =>{
     .then(answers => {
       console.log('You played: ', answers.hand);
       let position = payload.hand.p1Hand.indexOf(answers.hand);
-      let newArr = newPayload.hand.p1Hand.splice(position, position);
+      let newArr = newPayload.hand.p1Hand.splice(position, 1);
       console.log('POSITION: ', position, 'SPLICE: ', newArr);
       newPayload.p1PlayedCard = answers.hand;
       console.log('Your Hand after playing: ', newPayload.hand.p1Hand);
@@ -71,7 +71,8 @@ const warHand = (payload) =>{
     .then(answers => {
       console.log('You played: ', answers.hand);
       let position = payload.hand.p1Hand.indexOf(answers.hand);
-      payload.hand.p1Hand.splice(position, position);
+      let newArr = payload.hand.p1Hand.splice(position, 1);
+      console.log('POSITION: ', position, 'SPLICE: ', newArr);
       payload.p1PlayedCard = answers.hand;
       console.log('Your Hand after playing: ', payload.hand.p1Hand);
       socket.emit('warCardP2', payload);
