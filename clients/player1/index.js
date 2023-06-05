@@ -12,11 +12,11 @@ socket.on('p1WarCard', warHand);
 
 socket.on('p1Wins', (payload) => {
   console.log(`YOU WON THIS ROUND!!!! P1 Card: ${payload.p1PlayedCard} vs P2 Card ${payload.p2PlayedCard}`);
-  socket.emit('drawDeck', payload);
+//   socket.emit('drawDeck', payload);
 });
 socket.on('p1Lost', (payload) => {
   console.log(`YOU LOST THIS ROUND!!!! P1 Card: ${payload.p1PlayedCard} vs P2 Card ${payload.p2PlayedCard}`);
-  socket.emit('drawDeck', payload);
+//   socket.emit('drawDeck', payload);
 });
 
 socket.on('p2WinsGame', (payload) => {

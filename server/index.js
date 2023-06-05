@@ -133,10 +133,11 @@ warGame.on('connection', (socket) =>{
     }
   });
 
-  socket.on('delivered', (payload) => {
-    console.log('Delivered: ', timestamp, payload);
-    socket.broadcast.emit('delivered', payload);
-  });
+  // TODO: get queues working! (stretch goal?)
+  // socket.on('delivered', (payload) => {
+  //   console.log('Delivered: ', timestamp, payload);
+  //   socket.broadcast.emit('delivered', payload);
+  // });
 
   // TODO: get queues working! (stretch goal?)
   //   socket.on('getAll', (payload) =>{
