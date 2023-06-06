@@ -35,6 +35,7 @@ const drawHandler = (hand=null) => {
   socket.emit('drawDeck', payload);
 };
 
+
 const playedHand = (payload) =>{
   let newPayload = {...payload, p1PlayedCard: ''};
   const question = {
@@ -43,13 +44,12 @@ const playedHand = (payload) =>{
     message: 'Pick a Card:',
     choices: payload.hand.p1Hand,
   };
-
+  
   inquirer.prompt(question)
     .then(answers => {
       console.log('You played: ', answers.hand);
       let position = payload.hand.p1Hand.indexOf(answers.hand);
-      let newArr = newPayload.hand.p1Hand.splice(position, 1);
-      console.log('POSITION: ', position, 'SPLICE: ', newArr);
+      newPayload.hand.p1Hand.splice(position, 1);
       newPayload.p1PlayedCard = answers.hand;
       console.log('Your Hand after playing: ', newPayload.hand.p1Hand);
       socket.emit('playCardP1', newPayload);
@@ -71,11 +71,31 @@ const warHand = (payload) =>{
     .then(answers => {
       console.log('You played: ', answers.hand);
       let position = payload.hand.p1Hand.indexOf(answers.hand);
-      let newArr = payload.hand.p1Hand.splice(position, 1);
-      console.log('POSITION: ', position, 'SPLICE: ', newArr);
+      payload.hand.p1Hand.splice(position, 1);
       payload.p1PlayedCard = answers.hand;
       console.log('Your Hand after playing: ', payload.hand.p1Hand);
       socket.emit('warCardP2', payload);
+    })
+    .catch(error => {
+      console.error('Error occurred:', error);
+    });
+};
+  
+const playAgain = (payload) => {
+  const question = {
+    type: 'list',
+    name: 'playAgainPrompt',
+    message: 'Do you want to play again?',
+    choices: ['yes', 'no'],
+  };
+  
+  inquirer.prompt(question)
+    .then(answers => {
+      if (answers.playAgainPrompt === 'yes'){
+        drawHandler();      
+      } else {
+        console.log('Thank you for playing War!');
+      }
     })
     .catch(error => {
       console.error('Error occurred:', error);
@@ -87,4 +107,5 @@ module.exports = {
   drawHandler,
   playedHand,
   warHand,
+  playAgain,
 };
